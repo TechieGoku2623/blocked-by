@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**Status:** problem brief. The question and the measurement are written here. An implementation is not in this repository yet.
+**Status:** runnable on designed examples. Not a clinical system, a LIMS, or a trained model.
 
 </div>
 
@@ -18,7 +18,7 @@
   <img src="docs/demo.gif" alt="blocked-by" width="880"/>
 </p>
 
-The clip plays on this page. [Full video](docs/demo.mp4).
+The clip is `python -m blocked_by`, the program in this repository. [Full video](docs/demo.mp4).
 
 ## The problem
 
@@ -43,7 +43,17 @@ A screen-fail count with no clause is not this measurement. A model score with n
 
 ## What this repository is
 
-A public statement of that measurement, next to the trial-reporting work in [silent-trials](https://github.com/TechieGoku2623/silent-trials). It is not a screening engine, not an eligibility decision, and not medical advice.
+A clause screener for one patient and one quoted protocol. It is not an eligibility decision and not medical advice. Related trial-reporting work is in [silent-trials](https://github.com/TechieGoku2623/silent-trials).
+
+## Run
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+python -m blocked_by
+python -m unittest discover -s tests -v
+```
 
 ## Author
 
