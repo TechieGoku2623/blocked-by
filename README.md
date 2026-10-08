@@ -12,6 +12,14 @@
 
 ---
 
+## Watch
+
+<p align="center">
+  <img src="docs/demo.gif" alt="blocked-by" width="880"/>
+</p>
+
+The clip plays on this page. [Full video](docs/demo.mp4).
+
 ## The problem
 
 Eligibility criteria are applied as a stack of ANDs. A patient can meet the disease, the age band, and the consent window, and still be out because one lab cutoff, one prior-therapy line, or one vague "investigator discretion" sentence fired.
