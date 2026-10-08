@@ -15,10 +15,10 @@
 ## Watch
 
 <p align="center">
-  <img src="docs/demo.gif" alt="blocked-by" width="880"/>
+  <img src="docs/demo.gif" alt="blocked-by screening one patient: ALS passes, age is a near miss, eGFR 28 fails the safety bound" width="880"/>
 </p>
 
-The clip is `python -m blocked_by`, the program in this repository. [Full video](docs/demo.mp4).
+The clip is the working screen: one patient, each clause, and the rule that fired. [Open the demo](docs/demo.html). [Full video](docs/demo.mp4).
 
 ## The problem
 

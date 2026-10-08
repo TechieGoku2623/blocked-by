@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>blocked-by</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #101c18; color: #e8f0ea; font-family: Inter, system-ui, sans-serif; }
+  body { display: flex; flex-direction: column; padding: 28px 36px 32px; }
+  header { display: flex; justify-content: space-between; align-items: end; margin-bottom: 22px; }
+  h1 { margin: 0; font-size: 32px; letter-spacing: -0.04em; }
+  header p { margin: 0; color: #9fb3a6; font-size: 16px; }
+  main { flex: 1; display: grid; grid-template-columns: 360px 1fr; gap: 22px; }
+  .card, .stack { background: #182820; border: 1px solid #2c4638; border-radius: 18px; padding: 22px; }
+  h2 { margin: 0 0 16px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: #c6e27a; }
+  label { display: block; font-size: 13px; color: #8ea497; margin-bottom: 6px; }
+  .field { height: 48px; border-radius: 10px; background: #0e1814; border: 1px solid #2c4638; margin-bottom: 16px; display: flex; align-items: center; padding: 0 14px; font-size: 22px; }
+  .clause { border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; border: 1px solid #2c4638; background: #12201a; display: flex; justify-content: space-between; gap: 16px; align-items: center; transition: 0.35s ease; }
+  .clause b { font-size: 18px; }
+  .clause span { color: #9fb3a6; font-size: 14px; }
+  .clause.pass { border-color: #3d8f5a; }
+  .clause.near { border-color: #e0c36a; background: #2c2814; }
+  .clause.fail { border-color: #e07a68; background: #3a201c; }
+  .tag { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; min-width: 88px; text-align: right; }
+  .finding { margin-top: 8px; padding: 18px 20px; border-radius: 14px; background: #3a201c; border: 1px solid #e07a68; font-size: 18px; line-height: 1.45; opacity: 0; transform: translateY(8px); transition: 0.4s ease; }
+  .finding.show { opacity: 1; transform: none; }
+  .finding strong { color: #ffb2a6; }
+</style>
+</head>
+<body>
+<header>
+  <h1>blocked-by</h1>
+  <p>One patient. The clause that fired. Not a yes/no.</p>
+</header>
+<main>
+  <section class="card">
+    <h2>Patient</h2>
+    <label>Disease</label><div class="field" id="disease"></div>
+    <label>Age</label><div class="field" id="age"></div>
+    <label>eGFR</label><div class="field" id="egfr"></div>
+    <label>Prior therapy lines</label><div class="field" id="lines"></div>
+  </section>
+  <section class="stack">
+    <h2>Protocol clauses</h2>
+    <article class="clause" id="c1"><div><b>Confirmed ALS.</b><br><span>safety · must equal ALS</span></div><div class="tag" id="t1"></div></article>
+    <article class="clause" id="c2"><div><b>Age 70 years or younger.</b><br><span>convenience · age ≤ 70</span></div><div class="tag" id="t2"></div></article>
+    <article class="clause" id="c3"><div><b>eGFR at least 30 mL/min.</b><br><span>safety · eGFR ≥ 30</span></div><div class="tag" id="t3"></div></article>
+    <article class="clause" id="c4"><div><b>No more than one prior therapy line.</b><br><span>uncited · lines ≤ 1</span></div><div class="tag" id="t4"></div></article>
+    <div class="finding" id="finding"><strong>Firing clause.</strong> eGFR at least 30 mL/min is a safety bound. Raise eGFR from 28 to 30. Age passes with margin 2, a near miss.</div>
+  </section>
+</main>
+<script>
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+async function play() {
+  await wait(700);
+  const type = async (id, text) => {
+    const el = document.getElementById(id);
+    el.textContent = "";
+    for (const ch of text) { el.textContent += ch; await wait(55); }
+  };
+  await type("disease", "ALS");
+  await type("age", "68");
+  await type("egfr", "28");
+  await type("lines", "1");
+  await wait(400);
+  const mark = async (id, tag, cls, label) => {
+    document.getElementById(id).classList.add(cls);
+    document.getElementById(tag).textContent = label;
+    await wait(520);
+  };
+  await mark("c1", "t1", "pass", "pass");
+  await mark("c2", "t2", "near", "near miss");
+  await mark("c3", "t3", "fail", "fails");
+  await mark("c4", "t4", "pass", "pass");
+  document.getElementById("finding").classList.add("show");
+}
+</script>
+</body>
+</html>
